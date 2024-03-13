@@ -1,6 +1,7 @@
 package org.workshop.aiconferencebooking.model;
 
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -8,17 +9,22 @@ import jakarta.persistence.Transient;
 
 @Entity
 public class Person {
+
+    @JsonView(JsonViews.Sparse.class)
     @Id
     @GeneratedValue
     private Long id;
 
+    @JsonView(JsonViews.Sparse.class)
     private String username;
 
+    @JsonView(JsonViews.Sparse.class)
     private String firstName;
 
+    @JsonView(JsonViews.Sparse.class)
     private String lastName;
 
-
+    @JsonView(JsonViews.Sparse.class)
     private String email;
 
     @Transient
