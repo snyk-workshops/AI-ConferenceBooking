@@ -17,7 +17,7 @@ public class AiConferenceBookingApplication {
         System.out.println("start filling");
         return (args) -> {
             filler.createAdmin("Admin", "admin");
-            filler.createSpeaker("simon", "123123");
+            filler.createSpeaker("micah", "123123");
             System.out.println("READY!");
         };
     }
