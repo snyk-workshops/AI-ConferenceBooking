@@ -6,4 +6,7 @@ import org.workshop.aiconferencebooking.model.Talk;
 
 @Repository
 public interface TalkRepository extends JpaRepository<Talk, Long> {
+
+    Talk findByTitleContaining(String title);
+    Talk findByDescription(String description);
 }

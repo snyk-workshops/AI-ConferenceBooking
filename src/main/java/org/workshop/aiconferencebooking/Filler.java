@@ -1,5 +1,7 @@
 package org.workshop.aiconferencebooking;
 
+import net.datafaker.Faker;
+import net.datafaker.providers.movie.Movie;
 import org.springframework.stereotype.Component;
 import org.workshop.aiconferencebooking.model.Event;
 import org.workshop.aiconferencebooking.model.Person;
@@ -9,10 +11,15 @@ import org.workshop.aiconferencebooking.repository.EventRepository;
 import org.workshop.aiconferencebooking.repository.TalkRepository;
 import org.workshop.aiconferencebooking.service.PersonService;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 @Component
 public class Filler {
+
+    private Faker faker = new Faker();
 
     private final PersonService personService;
     private final EventRepository eventRepository;
@@ -55,7 +62,7 @@ public class Filler {
             email, phone, address
         );
         newPerson.setPassword(password);
-        newPerson.setRoles(role);
+        newPerson.setRole(role);
         return personService.savePerson(newPerson);
     }
 
@@ -69,5 +76,48 @@ public class Filler {
         newTalk.setSpeaker(speaker);
         newTalk.setEvent(event);
         return talkRepository.save(newTalk);
+    }
+
+    public void createAttendees(int num) {
+        for (int i=0; i < num; i++) {
+            createAttendee(faker.name().username(), "123123");
+        }
+    }
+
+    public void createSpeakers(int num) {
+        for (int i=0; i < num; i++) {
+            createSpeaker(faker.name().username(), "123123");
+        }
+    }
+
+    public void createTalksForEvent(int num, Event e) {
+        Calendar c = Calendar.getInstance();
+        Date now = new Date();
+        Random rand = new Random();
+        List<Person> people = personService.findByRole(Role.ROLE_SPEAKER);
+        for (int i=0; i < num; i++) {
+            c.setTime(now);
+            c.add(Calendar.DATE, rand.nextInt(4));
+            c.add(Calendar.HOUR, rand.nextInt(12));
+            Date start = c.getTime();
+            c.add(Calendar.HOUR, 1);
+            Date end = c.getTime();
+            String titleName = faker.hitchhikersGuideToTheGalaxy().character();
+            String titleQuote = faker.hitchhikersGuideToTheGalaxy().quote();
+            String description = faker.hitchhikersGuideToTheGalaxy().quote();
+            if (
+                talkRepository.findByTitleContaining(titleName) != null ||
+                talkRepository.findByTitleContaining(titleQuote) != null ||
+                talkRepository.findByDescription(description) != null ||
+                titleQuote.length() > 100
+            ) {
+                i--;
+                continue;
+            }
+            String title = titleName + " Presents: " + titleQuote;
+            createTalk(
+                title, description, start, end, people.get(rand.nextInt(people.size()-1)) ,e
+            );
+        }
     }
 }

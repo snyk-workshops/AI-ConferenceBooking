@@ -40,6 +40,10 @@ public class PersonService {
         return personRepository.findByEmail(email);
     }
 
+    public List<Person> findByRole(Role role) {
+        return personRepository.findByRole(role);
+    }
+
     public Person findById(Long id) {
         return personRepository.findById(id).get();
     }
@@ -64,7 +68,7 @@ public class PersonService {
             throw new EmailTakenException("Email is already exists: " + email);
         }
 
-        person.setRoles(Role.ROLE_ATTENDEE);
+        person.setRole(Role.ROLE_ATTENDEE);
 
         return savePerson(person);
     }

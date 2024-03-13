@@ -2,6 +2,7 @@ package org.workshop.aiconferencebooking.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -24,7 +25,7 @@ public class Talk {
     private Long id;
 
     @JsonView(JsonViews.Sparse.class)
-    @OneToOne
+    @ManyToOne
     private Person speaker;
 
     @JsonIgnoreProperties("talks")
@@ -32,9 +33,11 @@ public class Talk {
     private Event event;
 
     @JsonView(JsonViews.Sparse.class)
+    @Column(length = 4000)
     private String title;
 
     @JsonView(JsonViews.Sparse.class)
+    @Column(length = 4000)
     private String description;
 
     @Temporal(TemporalType.TIMESTAMP)

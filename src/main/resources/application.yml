@@ -14,7 +14,7 @@ spring:
     username: sa
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-    show-sql: true
+    show-sql: false
   devtools:
     restart:
       enabled: 'true'

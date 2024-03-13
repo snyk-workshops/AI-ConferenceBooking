@@ -42,7 +42,7 @@ public class Person {
 
     private String address;
 
-    private Role roles = Role.ROLE_ATTENDEE;
+    private Role role = Role.ROLE_ATTENDEE;
 
     private String profilePic = "default-profile-picture.jpg";
 
@@ -146,12 +146,12 @@ public class Person {
         this.address = address;
     }
 
-    public Role getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Role roles) {
-        this.roles = roles;
+    public void setRole(Role roles) {
+        this.role = roles;
     }
 
     public String getProfilePic() {
@@ -176,7 +176,7 @@ public class Person {
                 ", phone='" + phone + '\'' +
                 ", enable=" + enable +
                 ", address='" + address + '\'' +
-                ", roles=" + roles +
+                ", roles=" + role +
                 ", profilePic='" + profilePic + '\'' +
                 '}';
     }

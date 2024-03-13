@@ -12,6 +12,7 @@ import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class Event {
 
     @JsonView(JsonViews.Sparse.class)
     @OneToMany(mappedBy = "event", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Talk> talks;
+    private List<Talk> talks = new ArrayList<>();
 
     @JsonView(JsonViews.Sparse.class)
     String name;
