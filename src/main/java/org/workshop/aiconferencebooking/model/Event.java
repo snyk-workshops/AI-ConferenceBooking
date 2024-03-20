@@ -7,6 +7,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
@@ -26,6 +27,7 @@ public class Event {
 
     @JsonView(JsonViews.Sparse.class)
     @OneToMany(mappedBy = "event", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OrderBy("startDate ASC")
     private List<Talk> talks = new ArrayList<>();
 
     @JsonView(JsonViews.Sparse.class)
@@ -93,5 +95,13 @@ public class Event {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public List<Talk> getTalks() {
+        return talks;
+    }
+
+    public void setTalks(List<Talk> talks) {
+        this.talks = talks;
     }
 }

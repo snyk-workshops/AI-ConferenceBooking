@@ -1,3 +1,30 @@
 .orderLine {
     margin-bottom: 20px;
 }
+
+/*table#talks tr:nth-child(odd) {*/
+/*    background-color: #0074ab ;*/
+/*    color: yellow ;*/
+/*}*/
+table#talks tr:nth-child(even) {
+    background-color: #e6f7ff ;
+}
+th.id td.id {
+    width: 5%;
+}
+th.speaker {
+    width: 10%;
+}
+th.title {
+    width: 25%;
+}
+th.description {
+    width: 40%;
+}
+th.start td.start {
+    width: 10%;
+    padding-left: 5px;
+}
+th.end td.end {
+    width: 10%;
+}

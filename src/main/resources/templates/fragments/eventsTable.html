@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+    <div th:fragment="eventsTable">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="lead"> Search Talks </span>
+            </div>
+            <div class="panel-body">
+                <p>Search talks by <mark>name</mark> or <mark>description</mark></p>
+                <form th:action="@{/}" method="post">
+                    <input type="text" th:value="${input}" name="input" size="50"/>
+                    <input type="submit"/>
+                </form>
+            </div>
+            <div class="panel-heading">
+                <span class="lead">
+                    List of and Talks for: [[${event.name}]]<br/>
+                    From: [[${#dates.format(event.startDate, 'MM-dd-yyyy HH:mm')}]] to [[${#dates.format(event.endDate, 'MM-dd-yyyy HH:mm')}]]
+                </span>
+            </div>
+            <div class="panel-body" th:if="${#lists.isEmpty(talks)}">
+                <div class="alert alert-warning" style="margin-bottom: 0">No talks found.</div>
+            </div>
+            <table id="talks" th:if="${!#lists.isEmpty(talks)}">
+                <thead>
+                <tr>
+                    <th class="id">ID</th>
+                    <th class="speaker">Speaker</th>
+                    <th class="title">Title</th>
+                    <th class="description">Description</th>
+                    <th class="start">Start Date</th>
+                    <th class="end">End Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="talk : ${talks}">
+                    <td class="id" th:text="${talk.id}">ID</td>
+                    <td>[[${talk.speaker.username}]]</td>
+                    <td th:text="${talk.title}">ID</td>
+                    <td th:text="${talk.description}">ID</td>
+                    <td class="start" th:text="${#dates.format(talk.startDate, 'MM-dd-yyyy HH:mm')}">ID</td>
+                    <td class="end" th:text="${#dates.format(talk.endDate, 'MM-dd-yyyy HH:mm')}">ID</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>

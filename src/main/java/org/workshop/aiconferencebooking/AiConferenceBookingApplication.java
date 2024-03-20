@@ -34,11 +34,6 @@ public class AiConferenceBookingApplication {
             Date end = c.getTime();
             Event jcon = filler.createEvent("Java Conference", "Java Conference", start, end);
             filler.createTalksForEvent(10, jcon);
-//            c.setTime(start);
-//            c.add(Calendar.DATE, 2);
-//            c.add(Calendar.HOUR, 4);
-//            end = c.getTime();
-//            filler.createTalk("Java 101", "Java 101", start, end, speaker, jcon);
 
             System.out.println("READY!");
         };
