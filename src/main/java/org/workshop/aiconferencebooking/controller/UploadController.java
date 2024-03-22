@@ -10,7 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.workshop.aiconferencebooking.model.Person;
 import org.workshop.aiconferencebooking.service.PersonService;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.Principal;
 
 @Controller
@@ -31,10 +34,6 @@ public class UploadController {
 
     @PostMapping("/uploadimage")
     public String uploadImage(Model model, @RequestParam("image") MultipartFile file, Principal principal) throws IOException {
-
-//        model.addAttribute("msg", "Uploaded images: " + name);
-//        getPerson(model, principal).setProfilePic(name);
-//        personService.savePerson(getPerson(model, principal));
 
         return "person/upload";
     }
