@@ -2,6 +2,7 @@ package org.workshop.aiconferencebooking;
 
 import net.datafaker.Faker;
 import net.datafaker.providers.movie.Movie;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.stereotype.Component;
 import org.workshop.aiconferencebooking.model.Event;
 import org.workshop.aiconferencebooking.model.Person;
@@ -11,6 +12,7 @@ import org.workshop.aiconferencebooking.repository.EventRepository;
 import org.workshop.aiconferencebooking.repository.TalkRepository;
 import org.workshop.aiconferencebooking.service.PersonService;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +22,8 @@ import java.util.Random;
 public class Filler {
 
     private Faker faker = new Faker();
+    Random rand = new Random();
+    Calendar c = Calendar.getInstance();
 
     private final PersonService personService;
     private final EventRepository eventRepository;
@@ -75,6 +79,7 @@ public class Filler {
         var newTalk = new Talk(title, description, startDate, endDate);
         newTalk.setSpeaker(speaker);
         newTalk.setEvent(event);
+
         return talkRepository.save(newTalk);
     }
 
@@ -84,40 +89,42 @@ public class Filler {
         }
     }
 
-    public void createSpeakers(int num) {
+    public List<Person> createSpeakers(int num) {
+        List<Person> ret = new ArrayList<>();
         for (int i=0; i < num; i++) {
-            createSpeaker(faker.name().username(), "123123");
+            ret.add(createSpeaker(faker.name().username(), "123123"));
         }
+        return ret;
+    }
+
+    public void createTalkForEvent(Event e, Person speaker) {
+        c.setTime(new Date());
+        c.add(Calendar.DATE, rand.nextInt(4));
+        c.add(Calendar.HOUR, rand.nextInt(12));
+        Date start = c.getTime();
+        c.add(Calendar.HOUR, 1);
+        Date end = c.getTime();
+        String titleName, titleQuote, description;
+        do {
+            titleName = faker.hitchhikersGuideToTheGalaxy().character();
+            titleQuote = faker.hitchhikersGuideToTheGalaxy().quote();
+            if (titleQuote.length() > 150) {
+                titleQuote = titleQuote.substring(0, 150);
+            }
+
+            description = faker.hitchhikersGuideToTheGalaxy().quote();
+        } while (
+            talkRepository.findByTitleContaining(titleName) != null ||
+            talkRepository.findByTitleContaining(titleQuote) != null ||
+            talkRepository.findByDescription(description) != null
+        );
+        createTalk(String.format("%s Presents: %s", titleName, titleQuote), description, start, end, speaker ,e);
     }
 
     public void createTalksForEvent(int num, Event e) {
-        Calendar c = Calendar.getInstance();
-        Date now = new Date();
-        Random rand = new Random();
         List<Person> people = personService.findByRole(Role.ROLE_SPEAKER);
         for (int i=0; i < num; i++) {
-            c.setTime(now);
-            c.add(Calendar.DATE, rand.nextInt(4));
-            c.add(Calendar.HOUR, rand.nextInt(12));
-            Date start = c.getTime();
-            c.add(Calendar.HOUR, 1);
-            Date end = c.getTime();
-            String titleName = faker.hitchhikersGuideToTheGalaxy().character();
-            String titleQuote = faker.hitchhikersGuideToTheGalaxy().quote();
-            String description = faker.hitchhikersGuideToTheGalaxy().quote();
-            if (
-                talkRepository.findByTitleContaining(titleName) != null ||
-                talkRepository.findByTitleContaining(titleQuote) != null ||
-                talkRepository.findByDescription(description) != null ||
-                titleQuote.length() > 100
-            ) {
-                i--;
-                continue;
-            }
-            String title = titleName + " Presents: " + titleQuote;
-            createTalk(
-                title, description, start, end, people.get(rand.nextInt(people.size()-1)) ,e
-            );
+            createTalkForEvent(e, people.get(rand.nextInt(people.size()-1)));
         }
     }
 }

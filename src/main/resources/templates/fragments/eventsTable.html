@@ -37,10 +37,8 @@
                 <tbody>
                 <tr th:each="talk : ${talks}">
                     <td class="id" th:text="${talk.id}">ID</td>
-<!--                    <td>[[${talk.speaker.username}]]</td>-->
-                     <td>
-                        <a th:href="'/talks?username=' + ${talk.speaker.username}">[[${talk.speaker.username}]]</a>
-                     </td>
+                    <td>[[${talk.speaker.username}]]</td>
+<!--                    <td><a th:href="'/talks?username=' + ${talk.speaker.username}">[[${talk.speaker.username}]]</a></td>-->
                     <td th:text="${talk.title}">ID</td>
                     <td th:text="${talk.description}">ID</td>
                     <td class="start" th:text="${#dates.format(talk.startDate, 'MM-dd-yyyy HH:mm')}">ID</td>
