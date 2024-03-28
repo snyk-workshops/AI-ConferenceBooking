@@ -1,6 +1,5 @@
 package org.workshop.aiconferencebooking.controller;
 
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +20,9 @@ public class TalkController {
     }
 
     @GetMapping("/talks")
-    public void displayTalks(@RequestParam String username, HttpServletResponse response) throws IOException {
+    public void displayTalks(
+        @RequestParam String username, javax.servlet.http.HttpServletResponse response
+    ) throws IOException {
 
         List<Talk> talks =  talkRepository.findBySpeakerUsername(username);
 
@@ -32,7 +33,28 @@ public class TalkController {
     }
 
     private void buildTalksPage(String username, List<Talk> talks, PrintWriter writer) throws IOException {
-        String page = """
+
+        String talksStr = "";
+        for (Talk talk : talks) {
+            talksStr += String.format(talksTemplate, talk.getTitle(), talk.getDescription());
+        }
+
+        writer.write(pageBegTemplate);
+        writer.write(
+            "<h1>" + username + "'s talks<h1>"
+            .replaceAll("‛|’", "'")
+            .replaceAll("‟|”", "\"")
+        );
+        writer.write(pageMidTemplate);
+        writer.write(
+            talksStr
+            .replaceAll("‛|’", "'")
+            .replaceAll("‟|”", "\"")
+        );
+        writer.write(pageEndTemplate);
+    }
+
+    private String pageBegTemplate = """
             <html>
                 <head lang="en">
                     <title>Java Conference</title>
@@ -46,31 +68,25 @@ public class TalkController {
                     <div class="container">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h1>%s's talks</h1>
+        """;
+
+    private String pageMidTemplate = """
                             </div>
-                            <div class="panel-body">%s</div>
+                            <div class="panel-body">
+        """;
+
+    private String pageEndTemplate = """
+                            </div>
                         </div>
                     </div>
                 </body>
             </html>
         """;
 
-        String talksTemplate = """
+    private String talksTemplate = """
             <div class="panel panel-default">
                 <div class="panel-heading">%s</div>
                 <div class="panel-body">%s</div>
             </div>
         """;
-
-        String talksStr = "";
-        for (Talk talk : talks) {
-            talksStr += String.format(talksTemplate, talk.getTitle(), talk.getDescription());
-        }
-
-        writer.write(
-            String.format(page, username, talksStr)
-                .replaceAll("’", "'").replaceAll("‛", "'")
-                .replaceAll("‟", "\"").replaceAll("”", "\"")
-        );
-    }
 }
