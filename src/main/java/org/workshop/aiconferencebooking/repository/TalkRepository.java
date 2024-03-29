@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface TalkRepository extends JpaRepository<Talk, Long> {
 
-    Talk findByTitleContaining(String title);
+    Talk findByTitle(String title);
     Talk findByDescription(String description);
     List<Talk> findBySpeakerUsername(String username);
 }

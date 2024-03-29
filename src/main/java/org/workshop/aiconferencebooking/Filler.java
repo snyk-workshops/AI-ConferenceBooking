@@ -104,21 +104,21 @@ public class Filler {
         Date start = c.getTime();
         c.add(Calendar.HOUR, 1);
         Date end = c.getTime();
-        String titleName, titleQuote, description;
+        String title, description;
         do {
-            titleName = faker.hitchhikersGuideToTheGalaxy().character();
-            titleQuote = faker.hitchhikersGuideToTheGalaxy().quote();
+            String titleName = faker.hitchhikersGuideToTheGalaxy().character();
+            String titleQuote = faker.hitchhikersGuideToTheGalaxy().quote();
             if (titleQuote.length() > 150) {
                 titleQuote = titleQuote.substring(0, 150);
             }
+            title = String.format("%s Presents: %s", titleName, titleQuote);
 
             description = faker.hitchhikersGuideToTheGalaxy().quote();
         } while (
-            talkRepository.findByTitleContaining(titleName) != null ||
-            talkRepository.findByTitleContaining(titleQuote) != null ||
+            talkRepository.findByTitle(title) != null ||
             talkRepository.findByDescription(description) != null
         );
-        createTalk(String.format("%s Presents: %s", titleName, titleQuote), description, start, end, speaker ,e);
+        createTalk(title, description, start, end, speaker ,e);
     }
 
     public void createTalksForEvent(int num, Event e) {

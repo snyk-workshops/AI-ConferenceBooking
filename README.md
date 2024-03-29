@@ -110,9 +110,19 @@ Uncomment line 41 and comment line 40 in `eventsTable.html`
 
 14 - Fix the XSS vuln
 
-Use snyk code to scan (currently not catching it)
+Use snyk code to scan (it will catch the XSS vuln)
 
 Paste the code in ChatGPT and ask for analysis and fixes
 
-Here's a conversation reference for this: https://chat.openai.com/c/8fa84d91-30f3-4f1f-97ab-f50623788335
+Here's a conversation reference for this: https://chat.openai.com/share/0057868b-af09-461a-b3bd-26e451beea81
+
+Note that the prompt is: 
+
+```
+I am going to upload some code. Identify and fix any security vulnerabilities with minimal changes to the code.
+```
+
+Note that while ChatGPT recognizes the XSS vuln, it fixes it using a "homegrown" solution rather than something like
+`HTMLUtils.htmlEscape`
+
 
