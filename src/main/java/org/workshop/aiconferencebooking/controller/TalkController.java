@@ -42,15 +42,9 @@ public class TalkController {
         writer.write(pageBegTemplate);
         writer.write(
             "<h1>" + username + "'s talks<h1>"
-            .replaceAll("‛|’", "'")
-            .replaceAll("‟|”", "\"")
         );
         writer.write(pageMidTemplate);
-        writer.write(
-            talksStr
-            .replaceAll("‛|’", "'")
-            .replaceAll("‟|”", "\"")
-        );
+        writer.write(talksStr);
         writer.write(pageEndTemplate);
     }
 

@@ -2,6 +2,7 @@ package javax.servlet.http;
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.Cookie;
+import org.workshop.aiconferencebooking.config.ReplacingPrintWriter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -122,7 +123,7 @@ public class HttpServletResponse implements jakarta.servlet.http.HttpServletResp
 
     @Override
     public PrintWriter getWriter() throws IOException {
-        return originalResponse.getWriter();
+        return new ReplacingPrintWriter(originalResponse.getWriter());
     }
 
     @Override
