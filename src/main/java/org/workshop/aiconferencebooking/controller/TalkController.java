@@ -9,6 +9,7 @@ import org.workshop.aiconferencebooking.repository.TalkRepository;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class TalkController {
@@ -34,21 +35,16 @@ public class TalkController {
 
     private void buildTalksPage(String username, List<Talk> talks, PrintWriter writer) throws IOException {
 
-        String talksStr = "";
-        for (Talk talk : talks) {
-            talksStr += String.format(talksTemplate, talk.getTitle(), talk.getDescription());
-        }
+        String talksStr = talks.stream().map(
+            talk -> String.format(talksTemplate, talk.getTitle(), talk.getDescription())
+        ).collect(Collectors.joining());
 
-        writer.write(pageBegTemplate);
-        writer.write(
-            "<h1>" + username + "'s talks<h1>"
-        );
-        writer.write(pageMidTemplate);
-        writer.write(talksStr);
-        writer.write(pageEndTemplate);
+        String usernameStr = "<h1>" + username + "'s talks<h1>";
+
+        writer.write(String.format(pageTemplate, usernameStr, talksStr));
     }
 
-    private String pageBegTemplate = """
+    private String pageTemplate = """
             <html>
                 <head lang="en">
                     <title>Java Conference</title>
@@ -61,21 +57,13 @@ public class TalkController {
                 <body>
                     <div class="container">
                         <div class="panel panel-default">
-                            <div class="panel-heading">
-        """;
-
-    private String pageMidTemplate = """
-                            </div>
-                            <div class="panel-body">
-        """;
-
-    private String pageEndTemplate = """
-                            </div>
+                            <div class="panel-heading">%s</div>
+                            <div class="panel-body">%s</div>
                         </div>
                     </div>
                 </body>
             </html>
-        """;
+    """;
 
     private String talksTemplate = """
             <div class="panel panel-default">
