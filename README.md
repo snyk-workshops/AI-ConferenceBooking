@@ -15,7 +15,7 @@ In `SearchRepository.searchTalk`:
 
 ```
 // lowercase the input
-// create a query to search for the input in the description and title of the talk
+// create a query to search for talks with the input in the title, description or speaker username
 // return the result of the query
 ```
 
