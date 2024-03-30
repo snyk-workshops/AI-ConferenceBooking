@@ -20,7 +20,7 @@ public class OldSearchRepository {
 
     public List<Talk> searchTalk(String input) {
         var lowerInput = input.toLowerCase();
-        var query = em.createNativeQuery("Select * from Talk where lower(description) like '%" + lowerInput + "%' OR lower(title) like '%" + lowerInput + "%'", Talk.class);
+        var query = em.createNativeQuery("Select * from Talk t where lower(t.description) like '%" + lowerInput + "%' OR lower(t.title) like '%" + lowerInput + "%'", Talk.class);
         return (List<Talk>) query.getResultList();
     }
 }

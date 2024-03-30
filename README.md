@@ -5,8 +5,8 @@
 2 - set up the index page
 
 ```
-<!-- insert a pageHeader fragment -->
-<!-- insert the eventsTable fragment -->
+<!-- insert nav fragment here -->
+<!-- insert eventsTable fragment here -->
 ```
 
 3 - Add search functionality
@@ -26,7 +26,7 @@ In the app: show that the search field works
 In the app, put this in the search field:
 
 ```sql
-%'; update talk set start_date = CURRENT_TIMESTAMP, end_date = dateadd(hour,1,CURRENT_TIMESTAMP) where id = 1; --
+%'; update talk set start_date = dateadd(hour,-2,CURRENT_TIMESTAMP), end_date = dateadd(hour,1,CURRENT_TIMESTAMP) where id = 1; --
 ```
 
 This moves _your_ talk to the top of the list

@@ -6,7 +6,7 @@
 </head>
 <body>
 <div class="container">
-    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+    <!--/*/ <th:block th:include="fragments/nav :: nav"></th:block> /*/-->
     <form th:action="@{/profile}" method="post" th:object="${person}">
         <input type="hidden" th:field="*{id}"/>
         <div class="panel panel-default">
