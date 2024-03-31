@@ -15,8 +15,9 @@ In `SearchRepository.searchTalk`:
 
 ```
 // lowercase the input
-// create a query to search for talks with the input in the title, description or speaker username
-// return the result of the query
+// create a native query to search for talks joined with the person table with the input in the description, title or speaker username
+// execute the query
+// return the result
 ```
 
 In the app: show that the search field works
@@ -48,7 +49,7 @@ Delete the previous code in `SearchRepository.searchTalk`. Then:
 
 ```
 // lowercase the input
-// use a query with named parameters
+// create a native query using named parameters to search for talks joined with the person table with the input in the description, title or speaker username
 // set the parameter
 // return the result of the query
 ```
