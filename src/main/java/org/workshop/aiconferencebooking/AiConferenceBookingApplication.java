@@ -22,8 +22,15 @@ public class AiConferenceBookingApplication {
         this.serverProperties = serverProperties;
     }
 
+    public static void main(String[] args) {
+        SpringApplication.run(AiConferenceBookingApplication.class, args);
+    }
+
     @Bean
     public CommandLineRunner fill(Filler filler) {
+        // change to username to your own preference for demo purposes
+        Person theMainSpeaker = filler.createSpeaker("micah", "123123");
+
         System.out.println("Start Filling...");
         return (args) -> {
             filler.createAdmin("Admin", "admin");
@@ -41,21 +48,15 @@ public class AiConferenceBookingApplication {
             c.add(Calendar.DATE, 5);
             Date end = c.getTime();
             Event jcon = filler.createEvent("Java Conference", "Java Conference", start, end);
-            // change to username to your own preference for demo purposes
-            Person speaker = filler.createSpeaker("micah", "123123");
             System.out.printf(
                 "Access talks for %s at: http://localhost:%s/talks?username=%s\n",
-                speaker.getUsername(), serverProperties.getPort(), speaker.getUsername()
+                theMainSpeaker.getUsername(), serverProperties.getPort(), theMainSpeaker.getUsername()
             );
-            filler.createTalkForEvent(jcon, speaker);
-            filler.createTalkForEvent(jcon, speaker);
-            filler.createTalkForEvent(jcon, speaker);
+            filler.createTalkForEvent(jcon, theMainSpeaker);
+            filler.createTalkForEvent(jcon, theMainSpeaker);
+            filler.createTalkForEvent(jcon, theMainSpeaker);
             filler.createTalksForEvent(20, jcon);
             System.out.println("READY!");
         };
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(AiConferenceBookingApplication.class, args);
     }
 }
