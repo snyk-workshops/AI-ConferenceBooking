@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <head lang="en">
     <title>Edit Person - Java Conference</title>
-    <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+    <!--/*/ <th:block th:include="fragments/globalHeader :: head"></th:block> /*/-->
   </head>
   <body>
     <div class="container">
-      <!--/*/ <th:block th:include="fragments/nav :: nav"></th:block> /*/-->
+      <!--/*/ <th:block th:include="fragments/globalHeader :: nav"></th:block> /*/-->
       <form th:action="${person.id != null} ? @{/persons/edit/{id}(id=${person.id})} : @{/persons/add}"
             method="post" th:object="${person}">
         <input type="hidden" th:field="*{id}" />
