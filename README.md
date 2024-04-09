@@ -1,5 +1,7 @@
 ## CoPilot Demo
 
+**NOTE:** For the most effective demo, clone the project and import into IntelliJ fresh.
+
 1 - Launch the app, browse to: http://localhost:8080
 
 2 - set up the index page
@@ -115,7 +117,7 @@ Use snyk code to scan (it will catch the XSS vuln)
 
 Paste the code in ChatGPT and ask for analysis and fixes
 
-Here's a conversation reference for this: https://chat.openai.com/share/0057868b-af09-461a-b3bd-26e451beea81
+Here's a conversation reference for this: https://chat.openai.com/share/33b59fdc-318e-4df1-8e31-a7d983c7f9f0
 
 Note that the prompt is: 
 
@@ -123,7 +125,16 @@ Note that the prompt is:
 I am going to upload some code. Identify and fix any security vulnerabilities with minimal changes to the code.
 ```
 
-Note that while ChatGPT recognizes the XSS vuln, it fixes it using a "homegrown" solution rather than something like
-`HTMLUtils.htmlEscape`
+Note that the fix ChatGPT provides is too localized and doesn't address the root cause which is found outside the 
+`buildTalks` method.
 
+Run a snyk scan and show that the vuln is still there.
+
+In the `displayTalks` method, fix the code right at the top:
+
+```
+username = HtmlUtils.htmlEscape(username);
+```
+
+Run snyk code again and show that the vuln is fixed for realz this time.
 
