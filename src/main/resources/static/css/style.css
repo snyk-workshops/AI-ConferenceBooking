@@ -28,3 +28,7 @@ th.start td.start {
 th.end td.end {
     width: 10%;
 }
+td {
+    padding-right: 5px;
+    padding-bottom: 5px;
+}

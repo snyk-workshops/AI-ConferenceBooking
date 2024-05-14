@@ -4,6 +4,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.workshop.aiconferencebooking.service.PersonService;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -18,8 +19,15 @@ public class OldUploadController {
 
     public String uploadImage(Model model, MultipartFile file, Principal principal) throws IOException {
         var name = file.getOriginalFilename().replace(" ", "_");
-        var fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, name);
-        Files.write(fileNameAndPath, file.getBytes());
+        var fileNameAndPath = Paths.get(UPLOAD_DIRECTORY + File.separator + name);
+
+        var normalizedPath = fileNameAndPath.normalize();
+        if (!normalizedPath.startsWith(Paths.get(UPLOAD_DIRECTORY).normalize())) {
+            model.addAttribute("message", "ERROR");
+            return "person/upload";
+        }
+
+        Files.write(normalizedPath, file.getBytes());
         model.addAttribute("msg", "Uploaded images: " + name);
 
         if (principal == null) {

@@ -41,7 +41,7 @@ public class TalkController {
 
         String usernameStr = "<h1>" + username + "'s talks<h1>";
 
-        writer.write(String.format(pageTemplate, usernameStr, talksStr));
+        //writer.write(String.format(pageTemplate, usernameStr, talksStr));
     }
 
     private String pageTemplate = """
