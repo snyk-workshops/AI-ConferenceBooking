@@ -106,14 +106,14 @@ public class Filler {
         Date end = c.getTime();
         String title, description;
         do {
-            String titleName = faker.hitchhikersGuideToTheGalaxy().character();
-            String titleQuote = faker.hitchhikersGuideToTheGalaxy().quote();
+            String titleName = faker.hobbit().character();
+            String titleQuote = faker.hobbit().quote();
             if (titleQuote.length() > 150) {
                 titleQuote = titleQuote.substring(0, 150);
             }
             title = String.format("%s Presents: %s", titleName, titleQuote);
 
-            description = faker.hitchhikersGuideToTheGalaxy().quote();
+            description = faker.hobbit().quote();
         } while (
             talkRepository.findByTitle(title) != null ||
             talkRepository.findByDescription(description) != null
