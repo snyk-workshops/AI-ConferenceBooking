@@ -1,5 +1,6 @@
 package org.workshop.aiconferencebooking.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +23,7 @@ public class TalkController {
 
     @GetMapping("/talks")
     public void displayTalks(
-        @RequestParam String username, javax.servlet.http.HttpServletResponse response
+        @RequestParam String username, HttpServletResponse response
     ) throws IOException {
 
         List<Talk> talks =  talkRepository.findBySpeakerUsername(username);
