@@ -29,7 +29,7 @@ public class AiConferenceBookingApplication {
     @Bean
     public CommandLineRunner fill(Filler filler) {
         // change to username to your own preference for demo purposes
-        Person theMainSpeaker = filler.createSpeaker("micah", "123123");
+        Person theMainSpeaker = filler.createSpeaker("Fredrik", "123123");
 
         System.out.println("Start Filling...");
         return (args) -> {
