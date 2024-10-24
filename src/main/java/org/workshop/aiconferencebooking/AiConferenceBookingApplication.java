@@ -1,6 +1,7 @@
 package org.workshop.aiconferencebooking;
 
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,6 +19,17 @@ public class AiConferenceBookingApplication {
 
     private final ServerProperties serverProperties;
 
+    @Value("${auth.user.name}")
+    private String userName;
+
+    @Value("${auth.user.pwd}")
+    private String userPwd;
+
+    @Value("${auth.admin.pwd}")
+    private String adminPwd;
+
+
+
     public AiConferenceBookingApplication(ServerProperties serverProperties) {
         this.serverProperties = serverProperties;
     }
@@ -29,11 +41,11 @@ public class AiConferenceBookingApplication {
     @Bean
     public CommandLineRunner fill(Filler filler) {
         // change to username to your own preference for demo purposes
-        Person theMainSpeaker = filler.createSpeaker("micah", "123123");
+        Person theMainSpeaker = filler.createSpeaker(userName, userPwd);
 
         System.out.println("Start Filling...");
         return (args) -> {
-            filler.createAdmin("Admin", "admin");
+            filler.createAdmin("Admin", adminPwd);
             filler.createAttendees(10);
             List<Person> speakers = filler.createSpeakers(10);
             for (var speaker : speakers) {
