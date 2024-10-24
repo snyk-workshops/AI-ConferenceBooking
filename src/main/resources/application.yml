@@ -1,7 +1,7 @@
 auth:
   user:
-      name: "micah"
-      pwd: "123123"
+      name: micah
+      pwd: 123123
   admin:
     pwd: password
 server:
