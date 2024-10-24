@@ -2,13 +2,16 @@
 
 **NOTE:** For the most effective demo, clone the project and import into IntelliJ fresh each time.
 
+From IntelliJ, you can choose: `File > Manage IDE Settings > Import Settings...` and import the 
+`IntelliJIdeaLiveTemplateSettings.zip` file to take advantage of the live templates as called out in the presentation
+notes.
+
 Make sure you have copilot and snyk plugins installed.
 
 For each of the instructions below, you'll want to hit <enter> after the comment, wait for copilot to generate the
 code and then hit <tab> to accept its response.
 
-Refer to the [script doc](https://docs.google.com/document/d/1T7ER_sv1o7chEk6e0sSW4L-RzxQZlpUJ4BEubHi1hws/edit?tab=t.0) 
-for more information. 
+Refer to the script doc for more information. 
 
 0 - customize the `src/main/resources/application.yml` with your own `auth.user.name` OR just leave it as `micah` 
 
