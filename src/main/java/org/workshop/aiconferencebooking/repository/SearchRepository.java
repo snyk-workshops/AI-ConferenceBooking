@@ -20,6 +20,13 @@ public class SearchRepository {
 
     public List<Talk> searchTalk(String input) {
 
-        return null;
+    // lowercase the input
+    var lowerInput = input.toLowerCase();
+    // create a native query to search for talks with the input in the title, description or speaker username format the code to keep it to 80 characters per line
+    var query = em.createNativeQuery("select t.* from Talk t join Person p on t.speaker_id = p.id where lower(t.description) like '%" + lowerInput + "%' OR lower(t.title) like '%" + lowerInput + "%' OR lower(p.username) like '%" + lowerInput + "%'", Talk.class);
+    // execute the query
+    var talks = (List<Talk>) query.getResultList();
+    // return the result
+    return talks;
     }
 }
